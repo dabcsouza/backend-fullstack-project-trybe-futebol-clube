@@ -8,25 +8,42 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      home_team: {
+      homeTeam: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        field: 'home_team',
+        references: {
+          model: 'Teams',
+          key: 'id',
+        }
       },
-      home_team_goals: {
+      homeTeamGoals: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'home_team_goals',
       },
-      away_team: {
+      awayTeam: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        field: 'away_team',
+        references: {
+          model: 'Teams',
+          key: 'id',
+        }
       },
-      away_team_goals: {
+      awayTeamGoals: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'away_team_goals',
       },
-      in_progress: {
+      inProgress: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'in_progress'
       }
     });
   },

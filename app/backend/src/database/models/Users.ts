@@ -21,8 +21,23 @@ Users.init({
   },
   username: DataTypes.STRING,
   role: DataTypes.STRING,
-  email: DataTypes.STRING,
-  password: DataTypes.STRING,
+  email: {
+    type: DataTypes.STRING,
+    validate: {
+      isEmail: {
+        msg: '400|"email" must be a valid email',
+      },
+    },
+  },
+  password: {
+    type: DataTypes.STRING,
+    validate: {
+      len: {
+        args: [7, 100],
+        msg: '400|"password" length must be longer than 6 characters.',
+      },
+    },
+  },
 }, {
   underscored: true,
   sequelize: db,

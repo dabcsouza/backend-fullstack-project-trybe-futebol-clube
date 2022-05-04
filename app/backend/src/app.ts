@@ -1,4 +1,6 @@
 import * as express from 'express';
+import cors = require('cors');
+import loginRouter from './routes/login.routes';
 
 class App {
   public app: express.Express;
@@ -19,16 +21,17 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(cors());
+    this.app.use(loginRouter);
     // ...
   }
 
   // ...
   public start(PORT: string | number):void {
-    // ...
+    this.app.listen(PORT, () => console.log(`Server is running on PORT: ${PORT}`));
   }
 }
 
 export { App };
 
-// A execução dos testes de cobertura depende dessa exportação
 export const { app } = new App();
