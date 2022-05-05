@@ -58,7 +58,7 @@
     "express": "4.17.1",
     "express-rescue": "^1.1.31",
     "jest": "27.4.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^8.5.6",
     "mysql2": "2.3.3",
     "rescue": "^6.0.4",
     "sequelize": "^6.9.0"
