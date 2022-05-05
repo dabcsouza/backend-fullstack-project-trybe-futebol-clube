@@ -24,7 +24,7 @@ Matches.init({
   sequelize: db,
   timestamps: false,
   tableName: 'matches',
-  modelName: 'Matches',
+  modelName: 'Users',
 });
 
 Teams.belongsTo(Matches, {
