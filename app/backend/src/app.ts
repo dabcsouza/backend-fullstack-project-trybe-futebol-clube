@@ -1,13 +1,12 @@
 import * as express from 'express';
 import cors = require('cors');
 import loginRouter from './routes/login.routes';
+import errMiddleware from './middlewares/errMiddleware';
 
 class App {
-  public app: express.Express;
-  // ...
+  public app: express.Express = express();
 
   constructor() {
-    // ...
     this.config();
     // ...
   }
@@ -22,16 +21,15 @@ class App {
 
     this.app.use(accessControl);
     this.app.use(cors());
+    this.app.use(express.json());
     this.app.use(loginRouter);
-    // ...
+    this.app.use(errMiddleware);
   }
 
-  // ...
   public start(PORT: string | number):void {
     this.app.listen(PORT, () => console.log(`Server is running on PORT: ${PORT}`));
   }
 }
 
 export { App };
-
 export const { app } = new App();

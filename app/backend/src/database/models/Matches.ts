@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
 import Teams from './Teams';
@@ -24,7 +23,8 @@ Matches.init({
 }, {
   sequelize: db,
   timestamps: false,
-  underscored: true,
+  tableName: 'matches',
+  modelName: 'Matches',
 });
 
 Teams.belongsTo(Matches, {
