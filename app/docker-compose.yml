@@ -2,8 +2,6 @@ version: '3.9'
 services:
   frontend:
     build: ./frontend
-    networks:
-      - tfc
     container_name: app_frontend
     depends_on:
       backend:
@@ -14,8 +12,6 @@ services:
       retries: 5
   backend:
     build: ./backend
-    networks:
-      - tfc
     container_name: app_backend
     depends_on:
       db:
@@ -33,8 +29,6 @@ services:
       retries: 5
   db:
     image: mysql:8.0.21
-    networks:
-      - tfc
     container_name: db
     ports:
       - 3002:3306
