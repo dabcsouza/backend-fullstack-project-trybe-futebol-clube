@@ -1,4 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
+import bcrypt = require('bcrypt');
 import UsersAtributes from '../../interfaces/users.interface';
 import db from '.';
 
@@ -45,12 +46,17 @@ Users.init(
       },
     },
   },
-
   {
     tableName: 'users',
     modelName: 'Users',
     sequelize: db,
     timestamps: false,
+    hooks: {
+      beforeCreate: (user) => {
+        const salt = bcrypt.genSaltSync();
+        user.set('password', bcrypt.hashSync(user.password, salt));
+      },
+    },
   },
 );
 
