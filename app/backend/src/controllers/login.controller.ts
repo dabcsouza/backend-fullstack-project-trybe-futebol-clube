@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { SignOptions } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
-import bcrypt = require('bcrypt');
+// import bcrypt = require('bcrypt');
 import jwt = require('jsonwebtoken');
 import fs = require('fs/promises');
 import UserService from '../services/users.service';
