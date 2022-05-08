@@ -2,6 +2,7 @@ import * as express from 'express';
 import cors = require('cors');
 import loginRouter from './routes/login.routes';
 import errMiddleware from './middlewares/errMiddleware';
+import teamsRouter from './routes/teams.routes';
 
 class App {
   public app: express.Express = express();
@@ -23,6 +24,7 @@ class App {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use('/login', loginRouter);
+    this.app.use('/teams', teamsRouter);
     this.app.use(errMiddleware);
   }
 
