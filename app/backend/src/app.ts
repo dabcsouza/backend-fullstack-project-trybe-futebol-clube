@@ -22,7 +22,7 @@ class App {
     this.app.use(accessControl);
     this.app.use(cors());
     this.app.use(express.json());
-    this.app.use(loginRouter);
+    this.app.use('/login', loginRouter);
     this.app.use(errMiddleware);
   }
 

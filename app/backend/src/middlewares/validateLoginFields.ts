@@ -9,7 +9,7 @@ export const validateEmail = async (
   const { email } = req.body;
   const regexValid = /\S+@\S+\.com/;
   if (!email || email.length === 0) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: '"email" is required.' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'All fields must be filled' });
   }
 
   return regexValid.test(email)
@@ -26,7 +26,7 @@ export const validatePassword = async (
   const { password } = req.body;
 
   if (!password || password.length === 0) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'The field "email" is required' });
+    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'All fields must be filled' });
   }
 
   if (password.length < 7) {

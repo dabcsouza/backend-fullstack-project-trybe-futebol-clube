@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { SignOptions } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
-// import bcrypt = require('bcrypt');
+import bcrypt = require('bcrypt');
 import jwt = require('jsonwebtoken');
 import fs = require('fs/promises');
 import UserService from '../services/users.service';
@@ -27,19 +27,19 @@ export default class LoginController {
     ));
     const { email, password } = req.body;
     const userData = users.find((user) => user.email === email);
-    console.log(userData);
     if (!userData) {
       return res.status(StatusCodes.UNAUTHORIZED)
-        .json({ error: 'Email or password invalid' });
+        .json({ message: 'Incorrect email or password' });
     }
-
-    // const isValidPassword = bcrypt.compareSync(password, userData.password);
-    if (userData.password !== password) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'Email or password invalid' });
+    const isValidPassword = bcrypt.compareSync(password, userData.password);
+    if (isValidPassword) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Incorrect email or password' });
     }
+    const { id, username, role } = userData;
+    const user = { id, username, role, email };
 
-    this.token = jwt.sign({ data: email }, this.secretPass, this.jwtConfig);
-    res.status(StatusCodes.OK).json({ token: this.token });
+    this.token = jwt.sign({ data: user }, this.secretPass, this.jwtConfig);
+    res.status(StatusCodes.OK).json({ user, token: this.token });
   };
 
   private getJwtSecret = () => {
