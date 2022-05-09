@@ -18,4 +18,14 @@ const matchesSchema = Joi.object({
     .required(),
 });
 
+export const goalsSchema = Joi.object({
+  homeTeamGoals: Joi
+    .number()
+    .required(),
+
+  awayTeamGoals: Joi
+    .number()
+    .required(),
+});
+
 export default matchesSchema;

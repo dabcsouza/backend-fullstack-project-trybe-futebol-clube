@@ -1,4 +1,4 @@
-import CreateMatchesParams from '../interfaces/matches.interface';
+import CreateMatchesParams, { GoalsParams } from '../interfaces/matches.interface';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 
@@ -51,6 +51,21 @@ export default class MatchesService {
       const [updateInProgress] = await Matches
         .update({ inProgress: false }, { where: { id } });
       return updateInProgress;
+    } catch (err) {
+      const e: Error = err as Error;
+      console.error(e.message);
+    }
+  };
+
+  public updateGoals = async ({
+    id,
+    awayTeamGoals,
+    homeTeamGoals,
+  }: GoalsParams) => {
+    try {
+      const [updateGoals] = await Matches
+        .update({ awayTeamGoals, homeTeamGoals }, { where: { id } });
+      return updateGoals;
     } catch (err) {
       const e: Error = err as Error;
       console.error(e.message);

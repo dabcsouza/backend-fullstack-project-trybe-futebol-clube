@@ -11,5 +11,6 @@ matchesRouter.get('/', matchesController.getByQuery);
 matchesRouter.get('/:id', matchesController.getById);
 matchesRouter.post('/', validateJWT, validateMatchesFields, matchesController.create);
 matchesRouter.patch('/:id/finish', matchesController.finish);
+matchesRouter.patch('/:id', matchesController.updateGoals);
 
 export default matchesRouter;

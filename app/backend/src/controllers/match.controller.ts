@@ -57,7 +57,21 @@ export default class MatchesController {
   public finish = async (req: Request, res: Response) => {
     const { id } = req.params;
     const response = this.matchesService.finish(id);
-    if (!response) return res.status(404).json({ message: 'no match found' });
+    if (!response) return res.status(StatusCodes.NOT_FOUND).json({ message: 'no match found' });
     return res.status(StatusCodes.OK).json({ message: 'Update success' });
+  };
+
+  public updateGoals = async (req: Request, res: Response) => {
+    const { awayTeamGoals, homeTeamGoals } = req.body;
+    const { id } = req.params;
+    if (!awayTeamGoals && !homeTeamGoals) {
+      const response = this.matchesService.finish(id);
+      if (!response) return res.status(StatusCodes.NOT_FOUND).json({ message: 'No match found' });
+      return res.status(StatusCodes.OK).json({ message: 'Update inProgress success' });
+    }
+
+    await this.matchesService
+      .updateGoals({ id, awayTeamGoals, homeTeamGoals });
+    return res.status(StatusCodes.OK).json({ message: 'Goals update success' });
   };
 }
