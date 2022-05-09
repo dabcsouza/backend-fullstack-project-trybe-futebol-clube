@@ -1,3 +1,4 @@
+import CreateMatchesParams from '../interfaces/matches.interface';
 import Matches from '../database/models/Matches';
 import Teams from '../database/models/Teams';
 
@@ -16,7 +17,6 @@ export default class MatchesService {
     } catch (err) {
       const e: Error = err as Error;
       console.log(e.message);
-      throw new Error(e.message);
     }
   };
 
@@ -27,7 +27,33 @@ export default class MatchesService {
     } catch (err) {
       const e: Error = err as Error;
       console.log(e.message);
-      throw new Error(e.message);
+    }
+  };
+
+  public create = async ({
+    homeTeam,
+    homeTeamGoals,
+    awayTeam,
+    awayTeamGoals,
+    inProgress }: CreateMatchesParams) => {
+    try {
+      const newInsert = await Matches
+        .create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress });
+      return newInsert;
+    } catch (err) {
+      const e: Error = err as Error;
+      console.error(e.message);
+    }
+  };
+
+  public finish = async (id: number | string) => {
+    try {
+      const [updateInProgress] = await Matches
+        .update({ inProgress: false }, { where: { id } });
+      return updateInProgress;
+    } catch (err) {
+      const e: Error = err as Error;
+      console.error(e.message);
     }
   };
 }
