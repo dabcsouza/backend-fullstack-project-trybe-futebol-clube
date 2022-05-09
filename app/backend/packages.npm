@@ -1,5 +1,4 @@
-bcrypt
+bcrypt 
+-D @types/bcrypt
 http-status-codes
 joi
-bcryptjs
--D @types/bcryptjs
