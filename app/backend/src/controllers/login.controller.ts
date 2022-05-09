@@ -32,7 +32,7 @@ export default class LoginController {
         .json({ message: 'Incorrect email or password' });
     }
     const isValidPassword = bcrypt.compareSync(password, userData.password);
-    if (isValidPassword) {
+    if (!isValidPassword) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Incorrect email or password' });
     }
     const { id, username, role } = userData;
