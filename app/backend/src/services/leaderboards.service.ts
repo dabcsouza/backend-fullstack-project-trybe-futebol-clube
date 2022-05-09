@@ -1,4 +1,3 @@
-import teamsRouter from 'src/routes/teams.routes';
 import MatchesService from './matches.service';
 import TeamsService from './teams.service';
 
