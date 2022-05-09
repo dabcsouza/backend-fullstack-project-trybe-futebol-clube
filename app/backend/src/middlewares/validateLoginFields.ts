@@ -9,12 +9,12 @@ export const validateEmail = async (
   const { email } = req.body;
   const regexValid = /\S+@\S+\.com/;
   if (!email || email.length === 0) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'All fields must be filled' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'All fields must be filled' });
   }
 
   return regexValid.test(email)
     ? next()
-    : res.status(StatusCodes.BAD_REQUEST)
+    : res.status(StatusCodes.UNAUTHORIZED)
       .json({ message: 'The "email" must be have format "email@email.com"' });
 };
 
@@ -26,11 +26,11 @@ export const validatePassword = async (
   const { password } = req.body;
 
   if (!password || password.length === 0) {
-    return res.status(StatusCodes.BAD_REQUEST).json({ message: 'All fields must be filled' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'All fields must be filled' });
   }
 
   if (password.length < 7) {
-    return res.status(StatusCodes.BAD_REQUEST)
+    return res.status(StatusCodes.UNAUTHORIZED)
       .json({ message: '"password" must be longer than 6 characters.' });
   }
   return next();
