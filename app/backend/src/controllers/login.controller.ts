@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { SignOptions } from 'jsonwebtoken';
 import { StatusCodes } from 'http-status-codes';
-import bcrypt = require('bcrypt');
 import jwt = require('jsonwebtoken');
 import fs = require('fs/promises');
 import UserService from '../services/users.service';
+import validatePasswordBc from '../utils/utilsFunctions';
 
 export default class LoginController {
   private secretPass: string;
@@ -31,7 +31,7 @@ export default class LoginController {
       return res.status(StatusCodes.UNAUTHORIZED)
         .json({ message: 'Incorrect email or password' });
     }
-    const isValidPassword = bcrypt.compareSync(password, userData.password);
+    const isValidPassword = await validatePasswordBc(password, userData.password);
     if (!isValidPassword) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'Incorrect email or password' });
     }
