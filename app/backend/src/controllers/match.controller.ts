@@ -1,9 +1,13 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import TeamsService from '../services/teams.service';
 import MatchesService from '../services/matches.service';
 
 export default class MatchesController {
-  constructor(private matchesService = new MatchesService()) { }
+  constructor(
+    private matchesService = new MatchesService(),
+    private teamsService = new TeamsService(),
+  ) { }
 
   public getById = async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -27,9 +31,24 @@ export default class MatchesController {
     res.status(StatusCodes.OK).json(filtered);
   };
 
+  public verifyTeamId = async (id: number | string) => {
+    const team = await this.teamsService.getById(id);
+    return team;
+  };
+
   public create = async (req: Request, res: Response) => {
-    console.log(req.body);
     const inProgress = true;
+    const { awayTeam, homeTeam } = req.body;
+    const isHomeTeam = await this.verifyTeamId(homeTeam);
+    const isAwayTeam = await this.verifyTeamId(awayTeam);
+    if (!isHomeTeam || !isAwayTeam) {
+      return res.status(StatusCodes.UNAUTHORIZED)
+        .json({ message: 'There is no team with such id!' });
+    }
+    if (awayTeam === homeTeam) {
+      return res.status(StatusCodes.UNAUTHORIZED)
+        .json({ message: 'It is not possible to create a match with two equal teams' });
+    }
     const response = await this.matchesService
       .create({ ...req.body, inProgress });
     return res.status(StatusCodes.CREATED).json(response);
