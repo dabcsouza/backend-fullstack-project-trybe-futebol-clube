@@ -46,7 +46,7 @@ export default class MatchesController {
         .json({ message: 'There is no team with such id!' });
     }
     if (awayTeam === homeTeam) {
-      return res.status(StatusCodes.NOT_FOUND)
+      return res.status(StatusCodes.UNAUTHORIZED)
         .json({ message: 'It is not possible to create a match with two equal teams' });
     }
     const response = await this.matchesService
