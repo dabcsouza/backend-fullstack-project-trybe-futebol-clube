@@ -3,12 +3,13 @@ import matchesSchema, { goalsSchema } from '../schemas/matchesSchema';
 
 const validateMatchesFields = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(req.body);
     await matchesSchema.validateAsync(req.body);
     return next();
   } catch (err) {
     const e = err as Error;
     console.error(e.message);
-    const code = e.message.includes('is required') ? 400 : 422;
+    const code = e.message.includes('is required') ? 404 : 422;
     res.status(code).json({ message: e.message });
   }
 };
@@ -20,7 +21,7 @@ export const validateGoals = async (req: Request, res: Response, next: NextFunct
   } catch (err) {
     const e = err as Error;
     console.error(e.message);
-    const code = e.message.includes('is required') ? 400 : 422;
+    const code = e.message.includes('is required') ? 404 : 422;
     res.status(code).json({ message: e.message });
   }
 };

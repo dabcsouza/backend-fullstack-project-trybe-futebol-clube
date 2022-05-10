@@ -16,6 +16,9 @@ const matchesSchema = Joi.object({
   awayTeamGoals: Joi
     .number()
     .required(),
+
+  inProgress: Joi
+    .boolean(),
 });
 
 export const goalsSchema = Joi.object({

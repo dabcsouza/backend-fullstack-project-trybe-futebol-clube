@@ -37,20 +37,20 @@ export default class MatchesController {
   };
 
   public create = async (req: Request, res: Response) => {
-    const inProgress = true;
-    const { awayTeam, homeTeam } = req.body;
+    const { awayTeam, homeTeam, inProgress } = req.body;
+    const inProgressValue = inProgress || true;
     const isHomeTeam = await this.verifyTeamId(homeTeam);
     const isAwayTeam = await this.verifyTeamId(awayTeam);
     if (!isHomeTeam || !isAwayTeam) {
-      return res.status(StatusCodes.UNAUTHORIZED)
+      return res.status(StatusCodes.NOT_FOUND)
         .json({ message: 'There is no team with such id!' });
     }
     if (awayTeam === homeTeam) {
-      return res.status(StatusCodes.UNAUTHORIZED)
+      return res.status(StatusCodes.NOT_FOUND)
         .json({ message: 'It is not possible to create a match with two equal teams' });
     }
     const response = await this.matchesService
-      .create({ ...req.body, inProgress });
+      .create({ ...req.body, inProgress: inProgressValue });
     return res.status(StatusCodes.CREATED).json(response);
   };
 
