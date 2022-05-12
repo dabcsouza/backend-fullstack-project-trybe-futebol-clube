@@ -89,10 +89,10 @@ export default class LeaderboardService {
 
       return obj;
     });
-    return this.fillTotalLosses(response, teamGames);
+    return this.fillTotalLoses(response, teamGames);
   };
 
-  private fillTotalLosses(objResponse: ObjStructure[], games: TeamGameType[]): ObjStructure[] {
+  private fillTotalLoses(objResponse: ObjStructure[], games: TeamGameType[]): ObjStructure[] {
     const response = objResponse;
     const teamGames = games as TeamGameType[];
     response.forEach((team: ObjStructure, i) => {
@@ -123,7 +123,7 @@ export default class LeaderboardService {
           .filter((el) => el.homeTeamGoals === el.awayTeamGoals).length;
       } else if (this.typeCall === 'away') {
         obj.totalDraws = teamGames[i].awayGames
-          .filter((el) => el.homeTeamGoals > el.awayTeamGoals).length;
+          .filter((el) => el.homeTeamGoals === el.awayTeamGoals).length;
       } else {
         obj.totalDraws = teamGames[i].homeGames
           .filter((el) => el.homeTeamGoals === el.awayTeamGoals).length
