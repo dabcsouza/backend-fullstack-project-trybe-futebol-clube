@@ -1,7 +1,8 @@
+import TeamsAttributes from '../interfaces/teams.interface';
 import Teams from '../database/models/Teams';
 
 export default class TeamsService {
-  public getAll = async () => {
+  public getAll = async (): Promise<TeamsAttributes[]> => {
     try {
       const teams = await Teams.findAll();
       return teams;
